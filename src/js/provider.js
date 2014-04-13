@@ -14,7 +14,9 @@
  */
 var __indexOf = [].indexOf || function (item) {
   for (var i = 0, l = this.length; i < l; i++) {
-    if (i in this && this[i] === item) return i;
+    if (i in this && this[i] === item) {
+      return i;
+    }
   }
   return -1;
 };
@@ -43,7 +45,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
       editable: (_ref4 = component.editable) !== null ? _ref4 : true,
       required: (_ref5 = component.required) !== null ? _ref5 : false,
       validation: (_ref6 = component.validation) !== null ? _ref6 : '/.*/',
-      validationOptions: (_ref7 = component.validationOptions) != null ? _ref7 : [],
+      validationOptions: (_ref7 = component.validationOptions) !== null ? _ref7 : [],
       options: (_ref8 = component.options) !== null ? _ref8 : [],
       arrayToText: (_ref9 = component.arrayToText) !== null ? _ref9 : false,
       template: component.template,

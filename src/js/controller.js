@@ -7,9 +7,11 @@ var copyObjectToScope = function (object, scope) {
    */
   var key, value;
   for (key in object) {
-    value = object[key];
-    if (key !== '$$hashKey') {
-      scope[key] = value;
+    if (object.hasOwnProperty(key)) {
+      value = object[key];
+      if (key !== '$$hashKey') {
+        scope[key] = value;
+      }
     }
   }
 };
@@ -36,7 +38,8 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
         formObject.placeholder = $scope.placeholder;
         formObject.required = $scope.required;
         formObject.options = $scope.options;
-        return formObject.validation = $scope.validation;
+        formObject.validation = $scope.validation;
+        return formObject.validation;
       }, true);
       $scope.$watch('optionsText', function (text) {
         var x;
@@ -52,19 +55,21 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
           }
           return _results;
         })();
-        return $scope.inputText = $scope.options[0];
+        $scope.inputText = $scope.options[0];
+        return $scope.inputText;
       });
       component = $builder.components[formObject.component];
-      return $scope.validationOptions = component.validationOptions;
+      $scope.validationOptions = component.validationOptions;
+      return $scope.validationOptions;
     };
-    return $scope.data = {
+    $scope.data = {
       model: null,
       backup: function () {
 
         /*
          Backup input value.
          */
-        return this.model = {
+        this.model = {
           label: $scope.label,
           description: $scope.description,
           placeholder: $scope.placeholder,
@@ -72,6 +77,7 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
           optionsText: $scope.optionsText,
           validation: $scope.validation
         };
+        return this.model;
       },
       rollback: function () {
 
@@ -86,9 +92,11 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
         $scope.placeholder = this.model.placeholder;
         $scope.required = this.model.required;
         $scope.optionsText = this.model.optionsText;
-        return $scope.validation = this.model.validation;
+        $scope.validation = this.model.validation;
+        return $scope.validation;
       }
     };
+    return $scope.data;
   }
 ]).controller('fbComponentsController', [
   '$scope', '$injector', function ($scope, $injector) {
@@ -96,7 +104,7 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
     $builder = $injector.get('$builder');
     $scope.selectGroup = function ($event, group) {
       var component, name, _ref, _results;
-      if ($event != null) {
+      if ($event !== null) {
         $event.preventDefault();
       }
       $scope.activeGroup = group;
@@ -104,9 +112,11 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
       _ref = $builder.components;
       _results = [];
       for (name in _ref) {
-        component = _ref[name];
-        if (component.group === group) {
-          _results.push($scope.components.push(component));
+        if (_ref.hasOwnProperty(name)) {
+          component = _ref[name];
+          if (component.group === group) {
+            _results.push($scope.components.push(component));
+          }
         }
       }
       return _results;
@@ -120,9 +130,10 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
   }
 ]).controller('fbComponentController', [
   '$scope', function ($scope) {
-    return $scope.copyObjectToScope = function (object) {
+    $scope.copyObjectToScope = function (object) {
       return copyObjectToScope(object, $scope);
     };
+    return $scope.copyObjectToScope;
   }
 ]).controller('fbFormController', [
   '$scope', '$injector', function ($scope, $injector) {
@@ -148,7 +159,7 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
     $scope.copyObjectToScope = function (object) {
       return copyObjectToScope(object, $scope);
     };
-    return $scope.updateInput = function (value) {
+    $scope.updateInput = function (value) {
 
       /*
        Copy current scope.input[X] to $parent.input.
@@ -162,5 +173,6 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
       };
       return $scope.$parent.input.splice($scope.$index, 1, input);
     };
+    return $scope.updateInput;
   }
 ]);

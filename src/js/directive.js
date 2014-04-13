@@ -155,7 +155,8 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
              The shown event of the popover.
              */
             scope.data.backup();
-            return popover.isClickedSave = false;
+            popover.isClickedSave = false;
+            return popover.isClickedSave;
           },
           cancel: function ($event) {
 
@@ -275,7 +276,8 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
         if ((_base = $builder.forms)[_name = scope.formName] === null) {
           _base[_name] = [];
         }
-        return scope.form = $builder.forms[scope.formName];
+        scope.form = $builder.forms[scope.formName];
+        return scope.form;
       }
     };
   }
@@ -307,7 +309,8 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
                 checked.push(scope.options[index]);
               }
             }
-            return scope.inputText = checked.join(', ');
+            scope.inputText = checked.join(', ');
+            return scope.inputText;
           }, true);
         }
         scope.$watch('inputText', function () {
@@ -331,9 +334,11 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
             return;
           }
           if (component.arrayToText) {
-            return scope.inputArray = value;
+            scope.inputArray = value;
+            return scope.inputArray;
           } else {
-            return scope.inputText = value;
+            scope.inputText = value;
+            return scope.inputText;
           }
         });
       }

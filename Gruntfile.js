@@ -5,24 +5,40 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     cfg: {
-      dir: 'src'
+      dir: 'src',
+      tmp: '.tmp'
     },
     src: {
       js: '<%= cfg.dir %>/js/**/*.js',
       less: '<%= cfg.dir %>/less/**/*.less',
       templates: '<%= cfg.dir %>/partials/**/*.html'
     },
+    demo: {
+      dest: 'demo'
+    },
     build: {
-      dest: 'dist',
-      tmp: '.tmp'
+      dest: 'dist'
     },
 
-    clean: ['<%= build.dest %>', '<%= build.tmp %>'],
+    clean: {
+      options: {
+        force: true
+      },
+      prod: ['<%= build.dest %>']
+    },
 
     less: {
-      src: {
+      demo: {
         files: {
-          "<%= cfg.dir %>/css/app.css": "<%= cfg.dir %>/less/builder.less"
+          "<%= demo.dest %>/css/demo.css": "<%= cfg.dir %>/less/demo.less"
+        }
+      },
+      prod: {
+        options: {
+          cleancss: true
+        },
+        files: {
+          "<%= build.dest %>/form-builder.css": "<%= cfg.dir %>/less/builder.less"
         }
       }
     },
@@ -34,40 +50,73 @@ module.exports = function (grunt) {
       files: ['Gruntfile.js', '<%= src.js %>']
     },
 
-    /*coffee: {
-      source: {
-        files: {
-          'dist/angular-form-builder.js': ['src*//*.coffee']
-        }
+    uglify: {
+      options: {
+        mangle: false
       },
-      components: {
+      dist: {
         files: {
-          'dist/angular-form-builder-components.js': ['components*//*.coffee']
-        }
-      },
-      demo: {
-        files: {
-          'example/demo.js': 'example/demo.coffee'
+          '<%= build.dest %>/form-builder.min.js' : ['<%= build.dest %>/form-builder.js'],
+          '<%= build.dest %>/form-components.min.js' : '<%= build.dest %>/form-components.js'
         }
       }
-    },*/
+    },
+
+    concat: {
+      options: {
+        separator: '\n'
+      },
+      dist: {
+        src: ['<%= cfg.dir %>/js/controller.js', '<%= cfg.dir %>/js/directive.js', '<%= cfg.dir %>/js/drag.js', '<%= cfg.dir %>/js/provider.js', '<%= cfg.dir %>/js/builder.js'],
+        dest: '<%= build.dest %>/form-builder.js'
+      }
+    },
+
+    copy: {
+      demo: {
+        src: '<%= cfg.dir %>/js/demo.js',
+        dest: '<%= demo.dest %>/js'
+      },
+      prod: {
+        src: '<%= cfg.dir %>/js/components.js',
+        dest: '<%= build.dest %>/form-components.js'
+      }
+    },
+
+    /*coffee: {
+     source: {
+     files: {
+     'dist/angular-form-builder.js': ['src*//*.coffee']
+     }
+     },
+     components: {
+     files: {
+     'dist/angular-form-builder-components.js': ['components*//*.coffee']
+     }
+     },
+     demo: {
+     files: {
+     'example/demo.js': 'example/demo.coffee'
+     }
+     }
+     },*/
     watch: {
       js: {
-        files: '<%= jshint.files %>',
-        tasks: ['prepareSripts']
+        files: '<%= src.js %>',
+        tasks: ['jshint']
       },
       less: {
         files: '<%= src.less %>',
-        tasks: ['prepareStyles']
+        tasks: ['less:demo']
       }
     },
     connect: {
-      server: {
+      demo: {
         options: {
           protocol: 'http',
-          hostname: '*',
           port: 9000,
-          base: '.'
+          base: '.',
+          keepalive: true
         }
       }
     },
@@ -77,6 +126,18 @@ module.exports = function (grunt) {
       },
       source: {
         configFile: 'test/karma.config.coffee'
+      }
+    },
+
+    concurrent: {
+      demo: {
+        tasks: ['watch', 'connect:demo'],
+        options: {
+          logConcurrentOutput: true
+        }
+      },
+      prod: {
+        tasks: ['buildJs', 'buildCss']
       }
     }
   });
@@ -88,10 +149,15 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-karma');
 
   // Custom tasks (alias tasks)
-  grunt.registerTask('dev', ['connect', 'watch']);
   grunt.registerTask('test', ['karma']);
+  grunt.registerTask('dev', ['jshint', 'less:demo', 'concurrent:demo']);
+  grunt.registerTask('buildJs', ['concat', 'copy:prod', 'uglify']);
+  grunt.registerTask('buildCss', ['less:prod']);
+  grunt.registerTask('build', ['clean:prod', 'jshint', 'concurrent:prod']);
 };
