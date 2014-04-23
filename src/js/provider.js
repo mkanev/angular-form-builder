@@ -12,11 +12,10 @@
  This is for end-user. There are form groups int the form.
  They can input the value to the form.
  */
+
 var __indexOf = [].indexOf || function (item) {
   for (var i = 0, l = this.length; i < l; i++) {
-    if (i in this && this[i] === item) {
-      return i;
-    }
+    if (i in this && this[i] === item) return i;
   }
   return -1;
 };
@@ -38,16 +37,16 @@ angular.module('builder.provider', []).provider('$builder', function () {
     var result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
     result = {
       name: name,
-      group: (_ref = component.group) !== null ? _ref : 'Default',
-      label: (_ref1 = component.label) !== null ? _ref1 : '',
-      description: (_ref2 = component.description) !== null ? _ref2 : '',
-      placeholder: (_ref3 = component.placeholder) !== null ? _ref3 : '',
-      editable: (_ref4 = component.editable) !== null ? _ref4 : true,
-      required: (_ref5 = component.required) !== null ? _ref5 : false,
-      validation: (_ref6 = component.validation) !== null ? _ref6 : '/.*/',
-      validationOptions: (_ref7 = component.validationOptions) !== null ? _ref7 : [],
-      options: (_ref8 = component.options) !== null ? _ref8 : [],
-      arrayToText: (_ref9 = component.arrayToText) !== null ? _ref9 : false,
+      group: (_ref = component.group) != null ? _ref : 'Default',
+      label: (_ref1 = component.label) != null ? _ref1 : '',
+      description: (_ref2 = component.description) != null ? _ref2 : '',
+      placeholder: (_ref3 = component.placeholder) != null ? _ref3 : '',
+      editable: (_ref4 = component.editable) != null ? _ref4 : true,
+      required: (_ref5 = component.required) != null ? _ref5 : false,
+      validation: (_ref6 = component.validation) != null ? _ref6 : '/.*/',
+      validationOptions: (_ref7 = component.validationOptions) != null ? _ref7 : [],
+      options: (_ref8 = component.options) != null ? _ref8 : [],
+      arrayToText: (_ref9 = component.arrayToText) != null ? _ref9 : false,
       template: component.template,
       popoverTemplate: component.popoverTemplate
     };
@@ -61,11 +60,11 @@ angular.module('builder.provider', []).provider('$builder', function () {
   };
   this.convertFormObject = function (name, formObject) {
     var component, exist, form, result, _i, _len, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
-    if (formObject === null) {
+    if (formObject == null) {
       formObject = {};
     }
     component = this.components[formObject.component];
-    if (component === null) {
+    if (component == null) {
       throw "The component " + formObject.component + " was not registered.";
     }
     if (formObject.id) {
@@ -73,7 +72,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
       _ref = this.forms[name];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         form = _ref[_i];
-        if (formObject.id > form.id) {
+        if (!(formObject.id <= form.id)) {
           continue;
         }
         formObject.id = this.formsId[name]++;
@@ -85,16 +84,16 @@ angular.module('builder.provider', []).provider('$builder', function () {
       }
     }
     result = {
-      id: (_ref1 = formObject.id) !== null ? _ref1 : this.formsId[name]++,
+      id: (_ref1 = formObject.id) != null ? _ref1 : this.formsId[name]++,
       component: formObject.component,
-      editable: (_ref2 = formObject.editable) !== null ? _ref2 : component.editable,
-      index: (_ref3 = formObject.index) !== null ? _ref3 : 0,
-      label: (_ref4 = formObject.label) !== null ? _ref4 : component.label,
-      description: (_ref5 = formObject.description) !== null ? _ref5 : component.description,
-      placeholder: (_ref6 = formObject.placeholder) !== null ? _ref6 : component.placeholder,
-      options: (_ref7 = formObject.options) !== null ? _ref7 : component.options,
-      required: (_ref8 = formObject.required) !== null ? _ref8 : component.required,
-      validation: (_ref9 = formObject.validation) !== null ? _ref9 : component.validation
+      editable: (_ref2 = formObject.editable) != null ? _ref2 : component.editable,
+      index: (_ref3 = formObject.index) != null ? _ref3 : 0,
+      label: (_ref4 = formObject.label) != null ? _ref4 : component.label,
+      description: (_ref5 = formObject.description) != null ? _ref5 : component.description,
+      placeholder: (_ref6 = formObject.placeholder) != null ? _ref6 : component.placeholder,
+      options: (_ref7 = formObject.options) != null ? _ref7 : component.options,
+      required: (_ref8 = formObject.required) != null ? _ref8 : component.required,
+      validation: (_ref9 = formObject.validation) != null ? _ref9 : component.validation
     };
     return result;
   };
@@ -110,7 +109,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.registerComponent = (function (_this) {
     return function (name, component) {
       var newComponent, _ref;
-      if (component === null) {
+      if (component == null) {
         component = {};
       }
 
@@ -131,7 +130,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
        template: {string} html template
        popoverTemplate: {string} html template
        */
-      if (_this.components[name] === null) {
+      if (_this.components[name] == null) {
         newComponent = _this.convertComponent(name, component);
         _this.components[name] = newComponent;
         if (_ref = newComponent.group, __indexOf.call(_this.groups, _ref) < 0) {
@@ -145,14 +144,14 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.addFormObject = (function (_this) {
     return function (name, formObject) {
       var _base;
-      if (formObject === null) {
+      if (formObject == null) {
         formObject = {};
       }
 
       /*
        Insert the form object into the form at last.
        */
-      if ((_base = _this.forms)[name] === null) {
+      if ((_base = _this.forms)[name] == null) {
         _base[name] = [];
       }
       return _this.insertFormObject(name, _this.forms[name].length, formObject);
@@ -161,7 +160,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.insertFormObject = (function (_this) {
     return function (name, index, formObject) {
       var _base, _base1;
-      if (formObject === null) {
+      if (formObject == null) {
         formObject = {};
       }
 
@@ -182,10 +181,10 @@ angular.module('builder.provider', []).provider('$builder', function () {
        [index]: {int} The form object index. It will be updated by $builder.
        @return: The form object.
        */
-      if ((_base = _this.forms)[name] === null) {
+      if ((_base = _this.forms)[name] == null) {
         _base[name] = [];
       }
-      if ((_base1 = _this.formsId)[name] === null) {
+      if ((_base1 = _this.formsId)[name] == null) {
         _base1[name] = 0;
       }
       if (index > _this.forms[name].length) {

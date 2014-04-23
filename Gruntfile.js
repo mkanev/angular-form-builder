@@ -67,7 +67,7 @@ module.exports = function (grunt) {
         separator: '\n'
       },
       dist: {
-        src: ['<%= cfg.dir %>/js/controller.js', '<%= cfg.dir %>/js/directive.js', '<%= cfg.dir %>/js/drag.js', '<%= cfg.dir %>/js/provider.js', '<%= cfg.dir %>/js/builder.js'],
+        src: ['<%= cfg.dir %>/js/controller.js', '<%= cfg.dir %>/js/directive.js', '<%= cfg.dir %>/js/drag.js', '<%= cfg.dir %>/js/builder.js', '<%= cfg.dir %>/js/provider.js'],
         dest: '<%= build.dest %>/form-builder.js'
       }
     },
@@ -103,7 +103,7 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: '<%= src.js %>',
-        tasks: ['jshint']
+        tasks: [/*'jshint', */'buildJs']
       },
       less: {
         files: '<%= src.less %>',
@@ -156,8 +156,8 @@ module.exports = function (grunt) {
 
   // Custom tasks (alias tasks)
   grunt.registerTask('test', ['karma']);
-  grunt.registerTask('dev', ['jshint', 'less:demo', 'concurrent:demo']);
+  grunt.registerTask('dev', [/*'jshint',*/ 'less:demo', 'concurrent:demo']);
   grunt.registerTask('buildJs', ['concat', 'copy:prod', 'uglify']);
   grunt.registerTask('buildCss', ['less:prod']);
-  grunt.registerTask('build', ['clean:prod', 'jshint', 'concurrent:prod']);
+  grunt.registerTask('build', ['clean:prod', /*'jshint',*/ 'concurrent:prod']);
 };

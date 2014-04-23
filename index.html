@@ -1,70 +1,76 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <title>angular-form-builder</title>
-  <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-  <link type="text/css" rel="stylesheet" href="demo/css/demo.css"/>
-  <link type="text/css" rel="stylesheet" href="dist/form-builder.css"/>
-  <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
-  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="bower_components/angular-validator/dist/angular-validator.js"></script>
-  <script type="text/javascript" src="bower_components/angular-validator/dist/angular-validator-rules.js"></script>
-  <script type="text/javascript" src="dist/form-builder.js"></script>
-  <script type="text/javascript" src="dist/form-components.js"></script>
-  <script type="text/javascript" src="demo/js/demo.js"></script>
+    <title>angular-form-builder</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Angular based form builder with xsd generation"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="publisher" href="http://www.it.ru">
+    <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="dist/form-builder.css"/>
+    <link type="text/css" rel="stylesheet" href="demo/css/demo.css"/>
+    <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-validator/dist/angular-validator.js"></script>
+    <script type="text/javascript" src="bower_components/angular-validator/dist/angular-validator-rules.js"></script>
+    <script type="text/javascript" src="dist/form-builder.js"></script>
+    <script type="text/javascript" src="dist/form-components.js"></script>
+    <script type="text/javascript" src="demo/js/demo.js"></script>
 </head>
-<body class="container" ng-controller="DemoController">
-<div class="row">
-  <h1>angular-form-builder</h1>
-  <hr/>
-
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Builder</h3>
-      </div>
-      <div fb-builder="default"></div>
-      <div class="panel-footer">
-        <div class="checkbox">
-          <label><input type="checkbox" ng-model="isShowScope"/>
-            Show scope
-          </label>
+<body ng-controller="DemoController">
+<div class="mainWrapper">
+    <header class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 text-center navbar-brand">
+                Form Builder
+            </div>
+            <div class="col-md-9"></div>
         </div>
-        <pre ng-if="isShowScope">{{form}}</pre>
-      </div>
+    </header>
+    <div class="container-fluid page-content">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div fb-components></div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Builder</h3>
+                    </div>
+                    <div fb-builder="default"></div>
+                    <div class="panel-footer">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="isShowScope"/>
+                                Show scope
+                            </label>
+                        </div>
+                        <pre ng-if="isShowScope">{{form}}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div></div>
+            </div>
+
+        </div>
+
     </div>
-  </div>
-
-  <div class="col-md-6">
-    <div fb-components></div>
-  </div>
 </div>
-
-<div class="row">
-  <h2>Form</h2>
-  <hr/>
-  <form class="form-horizontal">
-    <div ng-model="input" fb-form="default" fb-default="defaultValue"></div>
-    <div class="form-group">
-      <div class="col-md-8 col-md-offset-4">
-        <input type="submit" ng-click="submit()" class="btn btn-default"/>
-      </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-center">АйТи, Ведомственные системы</div>
+            <div class="col-md-4"></div>
+        </div>
     </div>
-  </form>
-  <div class="checkbox">
-    <label><input type="checkbox" ng-model="isShowScope" ng-init="isShowScope=true"/>
-      Show scope
-    </label>
-  </div>
-  <pre ng-if="isShowScope">{{input}}</pre>
-</div>
-
-<div class="row">
-  <div class="col-md-12 footer"></div>
-</div>
-
+</footer>
 </body>
 </html>

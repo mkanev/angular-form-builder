@@ -1,17 +1,17 @@
 "use strict";
 
-var copyObjectToScope = function (object, scope) {
+var copyObjectToScope;
+
+copyObjectToScope = function (object, scope) {
 
   /*
    Copy object (ng-repeat="object in objects") to scope without `hashKey`.
    */
   var key, value;
   for (key in object) {
-    if (object.hasOwnProperty(key)) {
-      value = object[key];
-      if (key !== '$$hashKey') {
-        scope[key] = value;
-      }
+    value = object[key];
+    if (key !== '$$hashKey') {
+      scope[key] = value;
     }
   }
 };
@@ -38,8 +38,7 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
         formObject.placeholder = $scope.placeholder;
         formObject.required = $scope.required;
         formObject.options = $scope.options;
-        formObject.validation = $scope.validation;
-        return formObject.validation;
+        return formObject.validation = $scope.validation;
       }, true);
       $scope.$watch('optionsText', function (text) {
         var x;
@@ -55,21 +54,19 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
           }
           return _results;
         })();
-        $scope.inputText = $scope.options[0];
-        return $scope.inputText;
+        return $scope.inputText = $scope.options[0];
       });
       component = $builder.components[formObject.component];
-      $scope.validationOptions = component.validationOptions;
-      return $scope.validationOptions;
+      return $scope.validationOptions = component.validationOptions;
     };
-    $scope.data = {
+    return $scope.data = {
       model: null,
       backup: function () {
 
         /*
          Backup input value.
          */
-        this.model = {
+        return this.model = {
           label: $scope.label,
           description: $scope.description,
           placeholder: $scope.placeholder,
@@ -77,7 +74,6 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
           optionsText: $scope.optionsText,
           validation: $scope.validation
         };
-        return this.model;
       },
       rollback: function () {
 
@@ -92,11 +88,9 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
         $scope.placeholder = this.model.placeholder;
         $scope.required = this.model.required;
         $scope.optionsText = this.model.optionsText;
-        $scope.validation = this.model.validation;
-        return $scope.validation;
+        return $scope.validation = this.model.validation;
       }
     };
-    return $scope.data;
   }
 ]).controller('fbComponentsController', [
   '$scope', '$injector', function ($scope, $injector) {
@@ -112,11 +106,9 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
       _ref = $builder.components;
       _results = [];
       for (name in _ref) {
-        if (_ref.hasOwnProperty(name)) {
-          component = _ref[name];
-          if (component.group === group) {
-            _results.push($scope.components.push(component));
-          }
+        component = _ref[name];
+        if (component.group === group) {
+          _results.push($scope.components.push(component));
         }
       }
       return _results;
@@ -130,10 +122,9 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
   }
 ]).controller('fbComponentController', [
   '$scope', function ($scope) {
-    $scope.copyObjectToScope = function (object) {
+    return $scope.copyObjectToScope = function (object) {
       return copyObjectToScope(object, $scope);
     };
-    return $scope.copyObjectToScope;
   }
 ]).controller('fbFormController', [
   '$scope', '$injector', function ($scope, $injector) {
@@ -159,7 +150,7 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
     $scope.copyObjectToScope = function (object) {
       return copyObjectToScope(object, $scope);
     };
-    $scope.updateInput = function (value) {
+    return $scope.updateInput = function (value) {
 
       /*
        Copy current scope.input[X] to $parent.input.
@@ -173,7 +164,6 @@ angular.module('builder.controller', ['builder.provider']).controller('fbFormObj
       };
       return $scope.$parent.input.splice($scope.$index, 1, input);
     };
-    return $scope.updateInput;
   }
 ]);
 "use strict";
@@ -333,8 +323,7 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
              The shown event of the popover.
              */
             scope.data.backup();
-            popover.isClickedSave = false;
-            return popover.isClickedSave;
+            return popover.isClickedSave = false;
           },
           cancel: function ($event) {
 
@@ -454,8 +443,7 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
         if ((_base = $builder.forms)[_name = scope.formName] === null) {
           _base[_name] = [];
         }
-        scope.form = $builder.forms[scope.formName];
-        return scope.form;
+        return scope.form = $builder.forms[scope.formName];
       }
     };
   }
@@ -487,8 +475,7 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
                 checked.push(scope.options[index]);
               }
             }
-            scope.inputText = checked.join(', ');
-            return scope.inputText;
+            return scope.inputText = checked.join(', ');
           }, true);
         }
         scope.$watch('inputText', function () {
@@ -512,19 +499,15 @@ angular.module('builder.directive', ['builder.provider', 'builder.controller', '
             return;
           }
           if (component.arrayToText) {
-            scope.inputArray = value;
-            return scope.inputArray;
+            return scope.inputArray = value;
           } else {
-            scope.inputText = value;
-            return scope.inputText;
+            return scope.inputText = value;
           }
         });
       }
     };
   }
 ]);
-"use strict";
-
 angular.module('builder.drag', []).provider('$drag', function () {
   var $injector, $rootScope, delay;
   $injector = null;
@@ -555,10 +538,8 @@ angular.module('builder.drag', []).provider('$drag', function () {
         _this.mouseMoved = false;
         _ref = _this.hooks.down;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
       $(document).on('mousemove', function (e) {
@@ -566,20 +547,16 @@ angular.module('builder.drag', []).provider('$drag', function () {
         _this.mouseMoved = true;
         _ref = _this.hooks.move;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
       return $(document).on('mouseup', function (e) {
         var func, key, _ref;
         _ref = _this.hooks.up;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
     };
@@ -603,8 +580,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
      Setup providers.
      */
     $injector = injector;
-    $rootScope = $injector.get('$rootScope');
-    return $rootScope;
+    return $rootScope = $injector.get('$rootScope');
   };
   this.isHover = (function (_this) {
     return function ($elementA, $elementB) {
@@ -666,8 +642,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
             return _this.autoScroll.scroll();
           });
         } else {
-          _this.autoScroll.scrolling = false;
-          return _this.autoScroll.scrolling;
+          return _this.autoScroll.scrolling = false;
         }
       };
     })(this),
@@ -687,23 +662,21 @@ angular.module('builder.drag', []).provider('$drag', function () {
           }
         } else {
           _this.autoScroll.up = false;
-          _this.autoScroll.down = false;
-          return _this.autoScroll.down;
+          return _this.autoScroll.down = false;
         }
       };
     })(this),
     stop: (function (_this) {
       return function () {
         _this.autoScroll.up = false;
-        _this.autoScroll.down = false;
-        return _this.autoScroll.down;
+        return _this.autoScroll.down = false;
       };
     })(this)
   };
   this.dragMirrorMode = (function (_this) {
     return function ($element, defer, object) {
       var result;
-      if (defer === null) {
+      if (defer == null) {
         defer = true;
       }
       result = {
@@ -740,13 +713,11 @@ angular.module('builder.drag', []).provider('$drag', function () {
           _ref = _this.data.droppables;
           _results = [];
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              if (_this.isHover($clone, $(droppable.element))) {
-                _results.push(droppable.move(e, result));
-              } else {
-                _results.push(droppable.out(e, result));
-              }
+            droppable = _ref[id];
+            if (_this.isHover($clone, $(droppable.element))) {
+              _results.push(droppable.move(e, result));
+            } else {
+              _results.push(droppable.out(e, result));
             }
           }
           return _results;
@@ -755,11 +726,9 @@ angular.module('builder.drag', []).provider('$drag', function () {
           var droppable, id, isHover, _ref;
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              isHover = _this.isHover($clone, $(droppable.element));
-              droppable.up(e, isHover, result);
-            }
+            droppable = _ref[id];
+            isHover = _this.isHover($clone, $(droppable.element));
+            droppable.up(e, isHover, result);
           }
           delete _this.hooks.move.drag;
           delete _this.hooks.up.drag;
@@ -778,7 +747,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.dragDragMode = (function (_this) {
     return function ($element, defer, object) {
       var result;
-      if (defer === null) {
+      if (defer == null) {
         defer = true;
       }
       result = {
@@ -815,13 +784,11 @@ angular.module('builder.drag', []).provider('$drag', function () {
           _this.autoScroll.start(e);
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              if (_this.isHover($element, $(droppable.element))) {
-                droppable.move(e, result);
-              } else {
-                droppable.out(e, result);
-              }
+            droppable = _ref[id];
+            if (_this.isHover($element, $(droppable.element))) {
+              droppable.move(e, result);
+            } else {
+              droppable.out(e, result);
             }
           }
         };
@@ -829,11 +796,9 @@ angular.module('builder.drag', []).provider('$drag', function () {
           var droppable, id, isHover, _ref;
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              isHover = _this.isHover($element, $(droppable.element));
-              droppable.up(e, isHover, result);
-            }
+            droppable = _ref[id];
+            isHover = _this.isHover($element, $(droppable.element));
+            droppable.up(e, isHover, result);
           }
           delete _this.hooks.move.drag;
           delete _this.hooks.up.drag;
@@ -881,7 +846,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.draggable = (function (_this) {
     return function ($element, options) {
       var draggable, element, result, _i, _j, _len, _len1;
-      if (options === null) {
+      if (options == null) {
         options = {};
       }
 
@@ -915,7 +880,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.droppable = (function (_this) {
     return function ($element, options) {
       var droppable, element, result, _i, _len;
-      if (options === null) {
+      if (options == null) {
         options = {};
       }
 
@@ -952,6 +917,9 @@ angular.module('builder.drag', []).provider('$drag', function () {
 });
 "use strict";
 
+angular.module('builder', ['builder.directive']);
+"use strict";
+
 /*
  component:
  It is like a class.
@@ -964,11 +932,10 @@ angular.module('builder.drag', []).provider('$drag', function () {
  This is for end-user. There are form groups int the form.
  They can input the value to the form.
  */
+
 var __indexOf = [].indexOf || function (item) {
   for (var i = 0, l = this.length; i < l; i++) {
-    if (i in this && this[i] === item) {
-      return i;
-    }
+    if (i in this && this[i] === item) return i;
   }
   return -1;
 };
@@ -990,16 +957,16 @@ angular.module('builder.provider', []).provider('$builder', function () {
     var result, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
     result = {
       name: name,
-      group: (_ref = component.group) !== null ? _ref : 'Default',
-      label: (_ref1 = component.label) !== null ? _ref1 : '',
-      description: (_ref2 = component.description) !== null ? _ref2 : '',
-      placeholder: (_ref3 = component.placeholder) !== null ? _ref3 : '',
-      editable: (_ref4 = component.editable) !== null ? _ref4 : true,
-      required: (_ref5 = component.required) !== null ? _ref5 : false,
-      validation: (_ref6 = component.validation) !== null ? _ref6 : '/.*/',
-      validationOptions: (_ref7 = component.validationOptions) !== null ? _ref7 : [],
-      options: (_ref8 = component.options) !== null ? _ref8 : [],
-      arrayToText: (_ref9 = component.arrayToText) !== null ? _ref9 : false,
+      group: (_ref = component.group) != null ? _ref : 'Default',
+      label: (_ref1 = component.label) != null ? _ref1 : '',
+      description: (_ref2 = component.description) != null ? _ref2 : '',
+      placeholder: (_ref3 = component.placeholder) != null ? _ref3 : '',
+      editable: (_ref4 = component.editable) != null ? _ref4 : true,
+      required: (_ref5 = component.required) != null ? _ref5 : false,
+      validation: (_ref6 = component.validation) != null ? _ref6 : '/.*/',
+      validationOptions: (_ref7 = component.validationOptions) != null ? _ref7 : [],
+      options: (_ref8 = component.options) != null ? _ref8 : [],
+      arrayToText: (_ref9 = component.arrayToText) != null ? _ref9 : false,
       template: component.template,
       popoverTemplate: component.popoverTemplate
     };
@@ -1013,11 +980,11 @@ angular.module('builder.provider', []).provider('$builder', function () {
   };
   this.convertFormObject = function (name, formObject) {
     var component, exist, form, result, _i, _len, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
-    if (formObject === null) {
+    if (formObject == null) {
       formObject = {};
     }
     component = this.components[formObject.component];
-    if (component === null) {
+    if (component == null) {
       throw "The component " + formObject.component + " was not registered.";
     }
     if (formObject.id) {
@@ -1025,7 +992,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
       _ref = this.forms[name];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         form = _ref[_i];
-        if (formObject.id > form.id) {
+        if (!(formObject.id <= form.id)) {
           continue;
         }
         formObject.id = this.formsId[name]++;
@@ -1037,16 +1004,16 @@ angular.module('builder.provider', []).provider('$builder', function () {
       }
     }
     result = {
-      id: (_ref1 = formObject.id) !== null ? _ref1 : this.formsId[name]++,
+      id: (_ref1 = formObject.id) != null ? _ref1 : this.formsId[name]++,
       component: formObject.component,
-      editable: (_ref2 = formObject.editable) !== null ? _ref2 : component.editable,
-      index: (_ref3 = formObject.index) !== null ? _ref3 : 0,
-      label: (_ref4 = formObject.label) !== null ? _ref4 : component.label,
-      description: (_ref5 = formObject.description) !== null ? _ref5 : component.description,
-      placeholder: (_ref6 = formObject.placeholder) !== null ? _ref6 : component.placeholder,
-      options: (_ref7 = formObject.options) !== null ? _ref7 : component.options,
-      required: (_ref8 = formObject.required) !== null ? _ref8 : component.required,
-      validation: (_ref9 = formObject.validation) !== null ? _ref9 : component.validation
+      editable: (_ref2 = formObject.editable) != null ? _ref2 : component.editable,
+      index: (_ref3 = formObject.index) != null ? _ref3 : 0,
+      label: (_ref4 = formObject.label) != null ? _ref4 : component.label,
+      description: (_ref5 = formObject.description) != null ? _ref5 : component.description,
+      placeholder: (_ref6 = formObject.placeholder) != null ? _ref6 : component.placeholder,
+      options: (_ref7 = formObject.options) != null ? _ref7 : component.options,
+      required: (_ref8 = formObject.required) != null ? _ref8 : component.required,
+      validation: (_ref9 = formObject.validation) != null ? _ref9 : component.validation
     };
     return result;
   };
@@ -1062,7 +1029,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.registerComponent = (function (_this) {
     return function (name, component) {
       var newComponent, _ref;
-      if (component === null) {
+      if (component == null) {
         component = {};
       }
 
@@ -1083,7 +1050,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
        template: {string} html template
        popoverTemplate: {string} html template
        */
-      if (_this.components[name] === null) {
+      if (_this.components[name] == null) {
         newComponent = _this.convertComponent(name, component);
         _this.components[name] = newComponent;
         if (_ref = newComponent.group, __indexOf.call(_this.groups, _ref) < 0) {
@@ -1097,14 +1064,14 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.addFormObject = (function (_this) {
     return function (name, formObject) {
       var _base;
-      if (formObject === null) {
+      if (formObject == null) {
         formObject = {};
       }
 
       /*
        Insert the form object into the form at last.
        */
-      if ((_base = _this.forms)[name] === null) {
+      if ((_base = _this.forms)[name] == null) {
         _base[name] = [];
       }
       return _this.insertFormObject(name, _this.forms[name].length, formObject);
@@ -1113,7 +1080,7 @@ angular.module('builder.provider', []).provider('$builder', function () {
   this.insertFormObject = (function (_this) {
     return function (name, index, formObject) {
       var _base, _base1;
-      if (formObject === null) {
+      if (formObject == null) {
         formObject = {};
       }
 
@@ -1134,10 +1101,10 @@ angular.module('builder.provider', []).provider('$builder', function () {
        [index]: {int} The form object index. It will be updated by $builder.
        @return: The form object.
        */
-      if ((_base = _this.forms)[name] === null) {
+      if ((_base = _this.forms)[name] == null) {
         _base[name] = [];
       }
-      if ((_base1 = _this.formsId)[name] === null) {
+      if ((_base1 = _this.formsId)[name] == null) {
         _base1[name] = 0;
       }
       if (index > _this.forms[name].length) {
@@ -1199,4 +1166,3 @@ angular.module('builder.provider', []).provider('$builder', function () {
   };
   this.$get = this.get;
 });
-angular.module('builder', ['builder.directive']);

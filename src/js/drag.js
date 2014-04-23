@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('builder.drag', []).provider('$drag', function () {
   var $injector, $rootScope, delay;
   $injector = null;
@@ -30,10 +28,8 @@ angular.module('builder.drag', []).provider('$drag', function () {
         _this.mouseMoved = false;
         _ref = _this.hooks.down;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
       $(document).on('mousemove', function (e) {
@@ -41,20 +37,16 @@ angular.module('builder.drag', []).provider('$drag', function () {
         _this.mouseMoved = true;
         _ref = _this.hooks.move;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
       return $(document).on('mouseup', function (e) {
         var func, key, _ref;
         _ref = _this.hooks.up;
         for (key in _ref) {
-          if (_ref.hasOwnProperty(key)) {
-            func = _ref[key];
-            func(e);
-          }
+          func = _ref[key];
+          func(e);
         }
       });
     };
@@ -78,8 +70,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
      Setup providers.
      */
     $injector = injector;
-    $rootScope = $injector.get('$rootScope');
-    return $rootScope;
+    return $rootScope = $injector.get('$rootScope');
   };
   this.isHover = (function (_this) {
     return function ($elementA, $elementB) {
@@ -141,8 +132,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
             return _this.autoScroll.scroll();
           });
         } else {
-          _this.autoScroll.scrolling = false;
-          return _this.autoScroll.scrolling;
+          return _this.autoScroll.scrolling = false;
         }
       };
     })(this),
@@ -162,23 +152,21 @@ angular.module('builder.drag', []).provider('$drag', function () {
           }
         } else {
           _this.autoScroll.up = false;
-          _this.autoScroll.down = false;
-          return _this.autoScroll.down;
+          return _this.autoScroll.down = false;
         }
       };
     })(this),
     stop: (function (_this) {
       return function () {
         _this.autoScroll.up = false;
-        _this.autoScroll.down = false;
-        return _this.autoScroll.down;
+        return _this.autoScroll.down = false;
       };
     })(this)
   };
   this.dragMirrorMode = (function (_this) {
     return function ($element, defer, object) {
       var result;
-      if (defer === null) {
+      if (defer == null) {
         defer = true;
       }
       result = {
@@ -215,13 +203,11 @@ angular.module('builder.drag', []).provider('$drag', function () {
           _ref = _this.data.droppables;
           _results = [];
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              if (_this.isHover($clone, $(droppable.element))) {
-                _results.push(droppable.move(e, result));
-              } else {
-                _results.push(droppable.out(e, result));
-              }
+            droppable = _ref[id];
+            if (_this.isHover($clone, $(droppable.element))) {
+              _results.push(droppable.move(e, result));
+            } else {
+              _results.push(droppable.out(e, result));
             }
           }
           return _results;
@@ -230,11 +216,9 @@ angular.module('builder.drag', []).provider('$drag', function () {
           var droppable, id, isHover, _ref;
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              isHover = _this.isHover($clone, $(droppable.element));
-              droppable.up(e, isHover, result);
-            }
+            droppable = _ref[id];
+            isHover = _this.isHover($clone, $(droppable.element));
+            droppable.up(e, isHover, result);
           }
           delete _this.hooks.move.drag;
           delete _this.hooks.up.drag;
@@ -253,7 +237,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.dragDragMode = (function (_this) {
     return function ($element, defer, object) {
       var result;
-      if (defer === null) {
+      if (defer == null) {
         defer = true;
       }
       result = {
@@ -290,13 +274,11 @@ angular.module('builder.drag', []).provider('$drag', function () {
           _this.autoScroll.start(e);
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              if (_this.isHover($element, $(droppable.element))) {
-                droppable.move(e, result);
-              } else {
-                droppable.out(e, result);
-              }
+            droppable = _ref[id];
+            if (_this.isHover($element, $(droppable.element))) {
+              droppable.move(e, result);
+            } else {
+              droppable.out(e, result);
             }
           }
         };
@@ -304,11 +286,9 @@ angular.module('builder.drag', []).provider('$drag', function () {
           var droppable, id, isHover, _ref;
           _ref = _this.data.droppables;
           for (id in _ref) {
-            if (_ref.hasOwnProperty(id)) {
-              droppable = _ref[id];
-              isHover = _this.isHover($element, $(droppable.element));
-              droppable.up(e, isHover, result);
-            }
+            droppable = _ref[id];
+            isHover = _this.isHover($element, $(droppable.element));
+            droppable.up(e, isHover, result);
           }
           delete _this.hooks.move.drag;
           delete _this.hooks.up.drag;
@@ -356,7 +336,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.draggable = (function (_this) {
     return function ($element, options) {
       var draggable, element, result, _i, _j, _len, _len1;
-      if (options === null) {
+      if (options == null) {
         options = {};
       }
 
@@ -390,7 +370,7 @@ angular.module('builder.drag', []).provider('$drag', function () {
   this.droppable = (function (_this) {
     return function ($element, options) {
       var droppable, element, result, _i, _len;
-      if (options === null) {
+      if (options == null) {
         options = {};
       }
 

@@ -1,8 +1,48 @@
 @import "partials/_elements";
+@import "partials/_variables";
+@import url('http://fonts.googleapis.com/css?family=Ubuntu');
 
+html,
 body {
-  padding: 10px;
+  height: 100%;
+  font-family: @font-family-regular-ru;
+  font-weight: 400;
+  background-color: @color-clouds;
 }
-.footer {
-  height: 50px;
+
+header {
+  background-color: @color-white;
+  height: ~"@{header-height}px";
+}
+
+@brand-padding: 15px;
+header .navbar-brand {
+  height: ~"@{header-height}px";
+  padding: @brand-padding;
+  line-height: @header-height - 2 * @brand-padding;
+  background-color: @color-peter-river;
+  color: @color-milky;
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.mainWrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin-bottom: ~"-@{footer-height}px";
+  /* Pad bottom by footer height */
+  padding-bottom: ~"@{footer-height}px";
+}
+
+.page-content {
+  padding-top: 30px;
+}
+
+footer {
+  height: ~"@{footer-height}px";
+  background-color: @color-midnight-blue;
+  color: @color-milky;
+  padding-top: 0.5em;
 }
